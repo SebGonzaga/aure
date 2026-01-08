@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auré | Confidence in Every Detail</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+       <div class="logo">
+    <img src="https://houseofaure.wordpress.com/wp-content/uploads/2026/01/61f4b78c-4510-40ac-bad1-97534bcc5058-edited.jpg" alt="Auré Logo" style="height: 50px;">
+</div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+      <ul class="nav-links">
+    <li><a href="about.html">The House</a></li>
+    <li><a href="index.html#creations">Creations</a></li>
+    <li><a href="behind.html">Behind Auré</a></li>
+    <li><a href="care.html">Aftercare</a></li>
+</ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Designed with Purpose,<br>Worn with Confidence</h1>
+            <p>Jewellery that inspires self-expression and empowers beauty.</p>
+            <a href="#creations" class="btn-primary">Shop Creations</a>
+        </div>
+    </header>
+
+    <section id="creations" class="products">
+        <h2 class="section-title">The Icons of Auré</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image" style="background-image: url('https://houseofaure.wordpress.com/wp-content/uploads/2025/10/66aa159a-f5c3-4d37-99eb-a74ffaba322c.jpg?w=1024');"></div>
+                <h3>Obscura</h3>
+                <p class="price">₱599.00</p>
+                <button class="btn-secondary">View Detail</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image" style="background-image: url('https://houseofaure.wordpress.com/wp-content/uploads/2025/10/6ea33742-217e-41c9-a792-b74121a195da.jpg?w=1024');"></div>
+                <h3>Velour</h3>
+                <p class="price">₱999.00</p>
+                <button class="btn-secondary">View Detail</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image" style="background-image: url('https://houseofaure.wordpress.com/wp-content/uploads/2025/10/a337aa3c-1051-4281-866c-7bda759b2df7-edited.jpg');"></div>
+                <h3>Sloven</h3>
+                <p class="price">₱899.00</p>
+                <button class="btn-secondary">View Detail</button>
+            </div>
+        </div>
+    </section>
+<section class="founder-section">
+    <div class="founder-content">
+        <img src="https://houseofaure.wordpress.com/wp-content/uploads/2025/10/e8b6cfb0-11b0-48f8-bac8-d54b065f8871-edited.jpg" alt="Raiza Tabudlong">
+        <blockquote>
+            “Each piece tells a story only the night can understand—bold, quiet, and endlessly captivating.”
+            <cite>— Raiza Tabudlong, Founder</cite>
+        </blockquote>
+    </div>
+</section>
+    <footer>
+        <p>&copy; 2026 House of Auré. Confidence in Every Detail.</p>
+    </footer>
+
+    <script>
+        const menu = document.querySelector('#mobile-menu');
+        const menuLinks = document.querySelector('.nav-links');
+
+        menu.addEventListener('click', function() {
+            menu.classList.toggle('is-active');
+            menuLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #fcfbf9; /* Light Ivory */
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Typography */
+h1, h2, h3, .logo {
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 5%;
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #c5a059; /* Gold accent */
+}
+
+/* Hero Section */
+.hero {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: #f4f1ea; /* Soft beige */
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: #222;
+}
+
+.hero p {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+/* Buttons */
+.btn-primary {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: #222;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: #c5a059;
+}
+
+/* Product Grid */
+.products {
+    padding: 5rem 10%;
+    text-align: center;
+}
+
+.section-title {
+    margin-bottom: 3rem;
+    font-size: 2rem;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.product-card {
+    background: white;
+    padding: 1rem;
+    transition: transform 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 1.5rem;
+}
+
+.price {
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.btn-secondary {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    border-color: #c5a059;
+    color: #c5a059;
+}
+
+footer {
+    text-align: center;
+    padding: 3rem;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* ... Keep all previous CSS from my last message ... */
+
+/* Mobile Menu Styles */
+.menu-toggle {
+    display: none; /* Hidden on desktop */
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+    background: #333;
+}
+
+/* =========================================
+   RESPONSIVE QUERIES (The Magic Part)
+   ========================================= */
+
+/* For Tablets and Phones (under 768px) */
+@media screen and (max-width: 768px) {
+    
+    /* Navigation */
+    .nav-links {
+        display: none; /* Hide links initially */
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        background: white;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+        padding: 2rem 0;
+    }
+
+    .nav-links.active {
+        display: flex; /* Show when hamburger is clicked */
+    }
+
+    .nav-links li {
+        margin: 1.5rem 0;
+    }
+
+    .menu-toggle {
+        display: block; /* Show hamburger on mobile */
+    }
+
+    /* Hero Section */
+    .hero h1 {
+        font-size: 2.2rem; /* Smaller text for small screens */
+        padding: 0 10px;
+    }
+
+    .hero {
+        height: 60vh; /* Shorter hero on mobile */
+    }
+
+    /* Product Grid */
+    .product-grid {
+        grid-template-columns: 1fr; /* Stack products in one column */
+        gap: 3rem;
+    }
+
+    .product-image {
+        height: 350px; /* Adjust image height for mobile */
+    }
+}
+
+/* For Very Small Phones (under 480px) */
+@media screen and (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .logo {
+        font-size: 1.4rem;
+    }
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Luxury Fade-in Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content, .product-card {
+    animation: fadeIn 1.2s ease-out;
+}
+
+/* Founder Section Styling */
+.founder-section {
+    background: #f9f6f2;
+    padding: 80px 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.founder-content img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 2px solid #c5a059;
+}
+
+blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    max-width: 700px;
+    color: #444;
+}
+
+cite {
+    display: block;
+    margin-top: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Image Hover Effect */
+.product-image {
+    transition: transform 0.5s ease;
+    overflow: hidden;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
