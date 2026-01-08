@@ -5,24 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Behind Auré | Our Story</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <section class="page-header">
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="https://houseofaure.wordpress.com/wp-content/uploads/2026/01/61f4b78c-4510-40ac-bad1-97534bcc5058-edited.jpg" alt="Auré Logo" style="height: 50px;">
+            </a>
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="about.html">The House</a></li>
+            <li><a href="index.html#creations">Creations</a></li>
+            <li><a href="behind.html">Behind Auré</a></li>
+            <li><a href="care.html">Aftercare</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
         <h1>Behind Auré</h1>
         <p>The Visionary Heart</p>
-    </section>
+    </header>
 
     <section class="founder-profile">
         <div class="profile-container">
-            <img src="https://houseofaure.wordpress.com/wp-content/uploads/2025/10/e8b6cfb0-11b0-48f8-bac8-d54b065f8871-edited.jpg" alt="Raiza Tabudlong">
-            <h2>Raiza Tabudlong</h2>
-            <p class="role">Founder & Creative Director</p>
-            <div class="bio">
-                <p>"Each piece tells a story only the night can understand." Raiza started Auré with the vision of creating jewellery that doesn't just decorate, but empowers. Based in Batangas, Philippines, she oversees every detail from concept to the final polish.</p>
+            <div class="founder-image-wrapper">
+                <img src="https://houseofaure.wordpress.com/wp-content/uploads/2025/10/e8b6cfb0-11b0-48f8-bac8-d54b065f8871-edited.jpg" alt="Raiza Tabudlong">
+            </div>
+            <div class="founder-info">
+                <h2>Raiza Tabudlong</h2>
+                <p class="role">Founder & Creative Director</p>
+                <div class="bio">
+                    <p>"Each piece tells a story only the night can understand."</p>
+                    <p>Auré was born from a desire to create jewellery that doesn't just decorate, but empowers. Based in Tanauan City, Batangas, Raiza oversees the journey of every icon—from the first sketch to the final polish. Her philosophy is simple: jewellery should be as bold as the person wearing it.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer><p>&copy; 2026 House of Auré.</p></footer>
+    <section class="brand-values">
+        <div class="value-item">
+            <h3>Purposeful Design</h3>
+            <p>We don't follow trends. We create pieces with intention, designed to be icons of self-expression.</p>
+        </div>
+        <div class="value-item">
+            <h3>Crafted with Care</h3>
+            <p>Every detail is scrutinized to ensure quality that lasts as long as your stories do.</p>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 House of Auré. Confidence in Every Detail.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menu = document.querySelector('#mobile-menu');
+        const menuLinks = document.querySelector('.nav-links');
+        menu.addEventListener('click', () => {
+            menu.classList.toggle('is-active');
+            menuLinks.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
