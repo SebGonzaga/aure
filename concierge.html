@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auré Concierge | AI Stylist</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* Specific Styles for Chat Interface */
+        .chat-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            border: 1px solid #eee;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .message {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 2px;
+            font-size: 0.95rem;
+        }
+        .bot-message {
+            background: #f4f1ea;
+            align-self: flex-start;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        .user-message {
+            background: var(--charcoal);
+            color: white;
+            align-self: flex-end;
+        }
+        .chat-input-area {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        #user-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            outline-color: var(--gold);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><a href="index.html"><img src="https://houseofaure.wordpress.com/wp-content/uploads/2026/01/61f4b78c-4510-40ac-bad1-97534bcc5058-edited.jpg" alt="Auré Logo" style="height: 50px;"></a></div>
+        <ul class="nav-links">
+            <li><a href="about.html">The House</a></li>
+            <li><a href="concierge.html">AI Concierge</a></li>
+            <li><a href="behind.html">Behind Auré</a></li>
+            <li><a href="care.html">Aftercare</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Auré Concierge</h1>
+        <p>Your Virtual Jewelry Stylist</p>
+    </header>
+
+    <section class="chat-section">
+        <div class="chat-container">
+            <div class="chat-messages" id="chat-box">
+                <div class="message bot-message">
+                    Welcome to the House of Auré. I am your concierge. Are you looking for something bold for the night, or a quiet icon for the day?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="user-input" placeholder="Type your style preference...">
+                <button class="btn-primary" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        async function sendMessage() {
+    const input = document.getElementById('user-input');
+    const chatBox = document.getElementById('chat-box');
+    const userText = input.value.trim();
+    
+    if (userText === "") return;
+
+    // 1. Display User Message
+    appendMessage('user-message', userText);
+    input.value = "";
+
+    // 2. Display "Thinking" animation
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message bot-message';
+    typingDiv.id = 'typing';
+    typingDiv.innerText = "Auré is thinking...";
+    chatBox.appendChild(typingDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    try {
+        // 3. Call your backend (we will set this up next)
+        const response = await fetch('http://localhost:3000/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: userText })
+        });
+        
+        const data = await response.json();
+        
+        // 4. Remove typing and show real AI response
+        document.getElementById('typing').remove();
+        appendMessage('bot-message', data.reply);
+        
+    } catch (error) {
+        document.getElementById('typing').innerText = "I'm having trouble connecting to the House right now. Please try again.";
+        console.error("Error:", error);
+    }
+}
+
+function appendMessage(className, text) {
+    const chatBox = document.getElementById('chat-box');
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `message ${className}`;
+    msgDiv.innerText = text;
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+    </script>
+</body>
+</html>

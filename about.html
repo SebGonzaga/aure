@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,4 +56,64 @@
         });
     </script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The House | Auré</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html"><img src="https://houseofaure.wordpress.com/wp-content/uploads/2026/01/61f4b78c-4510-40ac-bad1-97534bcc5058-edited.jpg" alt="Auré Logo" style="height: 50px;"></a>
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="about.html">The House</a></li>
+            <li><a href="index.html#creations">Creations</a></li>
+            <li><a href="behind.html">Behind Auré</a></li>
+            <li><a href="care.html">Aftercare</a></li>
+            <li><a href="concierge.html">AI Concierge</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>The House</h1>
+        <p>Confidence in Every Detail</p>
+    </header>
+
+    <section class="about-content">
+        <div class="split-layout">
+            <div class="split-image" style="background-image: url('https://houseofaure.wordpress.com/wp-content/uploads/2025/10/bb5a8065-6266-4d6d-b7a4-ef3702a24ba0.jpg?w=1024');"></div>
+            <div class="split-text">
+                <h2>Our Mission</h2>
+                <p>At Auré, we believe in jewellery that inspires self-expression and empowers beauty, crafted with care for you and the planet.</p>
+                <p>Designed with purpose and worn with confidence, our pieces are more than just accessories—they are icons of modern femininity that balance shadow and light.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 House of Auré. Built with purpose.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menu = document.querySelector('#mobile-menu');
+        const menuLinks = document.querySelector('.nav-links');
+        menu.addEventListener('click', () => {
+            menu.classList.toggle('is-active');
+            menuLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+>>>>>>> 8f94ef3 (Initial commit: House of Auré Concierge with GPT-5 Mini)
 </html>
