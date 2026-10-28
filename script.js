@@ -5,6 +5,15 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+  /* intro curtain (home page, once per session) */
+  const root = document.documentElement, intro = $('#intro');
+  if (intro && root.classList.contains('introing')) {
+    let done = false;
+    const finish = () => { if (done) return; done = true; root.classList.remove('introing'); try { sessionStorage.setItem('aureIntro', '1'); } catch (e) {} setTimeout(() => intro.remove(), 900); };
+    const t1 = setTimeout(finish, 3300);               // hero + nav begin as the curtains part
+    $('.intro-skip').addEventListener('click', () => { clearTimeout(t1); intro.classList.add('skipping'); finish(); });
+  } else if (intro) intro.remove();
+
   /* mobile menu */
   const menu = $('#mobile-menu'), links = $('.nav-links');
   if (menu && links) {
@@ -23,6 +32,8 @@
     const max = document.documentElement.scrollHeight - innerHeight;
     bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
     nav && nav.classList.toggle('scrolled', scrollY > 30);
+    const hc = $('.hero-content');
+    if (hc && !reduce && scrollY < innerHeight) { hc.style.transform = `translateY(${scrollY * .22}px)`; hc.style.opacity = Math.max(0, 1 - scrollY / (innerHeight * .75)); }
   };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 

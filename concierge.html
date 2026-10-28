@@ -102,7 +102,33 @@
     <script>
         const chatBox = document.getElementById('chat-box');
         const input = document.getElementById('user-input');
-        const API = location.protocol === 'file:' ? 'http://localhost:3000/chat' : '/chat';
+
+        const pieces = {
+            obscura: "Obscura (₱599) is our boldest icon — born in the shadows, where light dares to linger. A signature piece for evenings when you want to be remembered.",
+            velour:  "Velour (₱999) is soft darkness, rich with untold stories. Crafted for those who lead with grace — a beautiful piece for special occasions or gifting.",
+            sloven:  "Sloven (₱899) is where shadow meets light. A minimalist icon with perfect balance, made for everyday wear.",
+            enigma:  "Énigma (₱699) is mysterious and captivating — what cannot be explained, must be felt. A wonderful addition to an existing collection."
+        };
+        const rules = [
+            [/(hello|hi\b|hey|good (morning|afternoon|evening))/, "Welcome to the House of Auré. Are you looking for something bold for the night, or a quiet icon for the day?"],
+            [/obscura/, pieces.obscura], [/velour/, pieces.velour], [/sloven/, pieces.sloven], [/(enigma|énigma)/, pieces.enigma],
+            [/(bold|night|evening|party|statement|dramatic)/, pieces.obscura + " If you'd like something equally striking but more mysterious, consider Énigma (₱699)."],
+            [/(quiet|everyday|daily|minimal|simple|subtle|day)/, pieces.sloven + " For a softer, richer look, Velour (₱999) is lovely too."],
+            [/(gift|present|birthday|anniversary|mom|mother|girlfriend|wife|sister)/, "For a gift, Velour (₱999) is our most graceful choice, and Énigma (₱699) is a wonderful option if you'd like something under ₱1,000. Every piece arrives in an Auré pouch."],
+            [/(cheap|budget|afford|price|how much|cost|under)/, "Our collection: Obscura ₱599, Énigma ₱699, Sloven ₱899 and Velour ₱999. Obscura is our most accessible icon."],
+            [/(care|clean|polish|tarnish|store|storage|wash|water|perfume)/, "To keep your piece shining: avoid liquids, perfumes and lotions, polish gently with a soft lint-free cloth after each wear, and store it in its Auré pouch in a cool, dry place."],
+            [/(order|buy|purchase|inquire|how do i|available|stock)/, "To order or check availability, send us a message on Instagram @creationsofaure — Raiza will be happy to help personally."],
+            [/(ship|deliver|where|location|batangas|tanauan)/, "We are based in Tanauan City, Batangas. For delivery details, please message us on Instagram @creationsofaure."],
+            [/(who|founder|raiza|about)/, "Auré was founded by Raiza Tabudlong in Tanauan City, Batangas — jewellery designed with purpose and worn with confidence."],
+            [/(thank|thanks)/, "It is my pleasure. May your Auré piece bring you confidence in every detail."]
+        ];
+        const fallback = "I would love to help you find your icon. Tell me the mood — bold for the night, a quiet everyday piece, or a gift — or ask about Obscura, Velour, Sloven or Énigma.";
+
+        function reply(text) {
+            const q = text.toLowerCase();
+            const hit = rules.find(([re]) => re.test(q));
+            return hit ? hit[1] : fallback;
+        }
 
         function appendMessage(cls, text) {
             const d = document.createElement('div');
@@ -110,22 +136,14 @@
             chatBox.appendChild(d); chatBox.scrollTop = chatBox.scrollHeight; return d;
         }
 
-        async function sendMessage(preset) {
-            const text = (preset || input.value).trim();
+        function sendMessage(preset) {
+            const text = (typeof preset === 'string' ? preset : input.value).trim();
             if (!text) return;
             appendMessage('user-message', text); input.value = '';
             document.querySelector('.chips')?.remove();
             const typing = appendMessage('bot-message', '');
             typing.innerHTML = '<span class="typing-dots"><i></i><i></i><i></i></span>';
-            try {
-                const res = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) });
-                const data = await res.json();
-                typing.textContent = data.reply || 'Forgive me, I seem to have lost my words.';
-            } catch (err) {
-                typing.textContent = "I'm having trouble connecting to the House right now. Please try again.";
-                console.error(err);
-            }
-            chatBox.scrollTop = chatBox.scrollHeight;
+            setTimeout(() => { typing.textContent = reply(text); chatBox.scrollTop = chatBox.scrollHeight; }, 700 + Math.random() * 500);
         }
 
         input.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
