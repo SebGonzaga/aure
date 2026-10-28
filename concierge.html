@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>document.documentElement.classList.add('js')</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auré Concierge | AI Stylist</title>
@@ -62,11 +63,15 @@
 
     <nav class="navbar">
         <div class="logo"><a href="index.html"><img src="https://houseofaure.wordpress.com/wp-content/uploads/2026/01/61f4b78c-4510-40ac-bad1-97534bcc5058-edited.jpg" alt="Auré Logo" style="height: 50px;"></a></div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
         <ul class="nav-links">
             <li><a href="about.html">The House</a></li>
-            <li><a href="concierge.html">AI Concierge</a></li>
+            <li><a href="index.html#creations">Creations</a></li>
             <li><a href="behind.html">Behind Auré</a></li>
             <li><a href="care.html">Aftercare</a></li>
+            <li><a href="concierge.html">AI Concierge</a></li>
         </ul>
     </nav>
 
@@ -82,61 +87,50 @@
                     Welcome to the House of Auré. I am your concierge. Are you looking for something bold for the night, or a quiet icon for the day?
                 </div>
             </div>
+            <div class="chips">
+                <button class="chip">Something bold for the night</button>
+                <button class="chip">A quiet everyday icon</button>
+                <button class="chip">Gift ideas under ₱1,000</button>
+            </div>
             <div class="chat-input-area">
                 <input type="text" id="user-input" placeholder="Type your style preference...">
-                <button class="btn-primary" onclick="sendMessage()">Send</button>
+                <button class="btn-primary" onclick="sendMessage()" type="button">Send</button>
             </div>
         </div>
     </section>
 
     <script>
-        async function sendMessage() {
-    const input = document.getElementById('user-input');
-    const chatBox = document.getElementById('chat-box');
-    const userText = input.value.trim();
-    
-    if (userText === "") return;
+        const chatBox = document.getElementById('chat-box');
+        const input = document.getElementById('user-input');
+        const API = location.protocol === 'file:' ? 'http://localhost:3000/chat' : '/chat';
 
-    // 1. Display User Message
-    appendMessage('user-message', userText);
-    input.value = "";
+        function appendMessage(cls, text) {
+            const d = document.createElement('div');
+            d.className = `message ${cls}`; d.textContent = text;
+            chatBox.appendChild(d); chatBox.scrollTop = chatBox.scrollHeight; return d;
+        }
 
-    // 2. Display "Thinking" animation
-    const typingDiv = document.createElement('div');
-    typingDiv.className = 'message bot-message';
-    typingDiv.id = 'typing';
-    typingDiv.innerText = "Auré is thinking...";
-    chatBox.appendChild(typingDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
+        async function sendMessage(preset) {
+            const text = (preset || input.value).trim();
+            if (!text) return;
+            appendMessage('user-message', text); input.value = '';
+            document.querySelector('.chips')?.remove();
+            const typing = appendMessage('bot-message', '');
+            typing.innerHTML = '<span class="typing-dots"><i></i><i></i><i></i></span>';
+            try {
+                const res = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) });
+                const data = await res.json();
+                typing.textContent = data.reply || 'Forgive me, I seem to have lost my words.';
+            } catch (err) {
+                typing.textContent = "I'm having trouble connecting to the House right now. Please try again.";
+                console.error(err);
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
 
-    try {
-        // 3. Call your backend (we will set this up next)
-        const response = await fetch('http://localhost:3000/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: userText })
-        });
-        
-        const data = await response.json();
-        
-        // 4. Remove typing and show real AI response
-        document.getElementById('typing').remove();
-        appendMessage('bot-message', data.reply);
-        
-    } catch (error) {
-        document.getElementById('typing').innerText = "I'm having trouble connecting to the House right now. Please try again.";
-        console.error("Error:", error);
-    }
-}
-
-function appendMessage(className, text) {
-    const chatBox = document.getElementById('chat-box');
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `message ${className}`;
-    msgDiv.innerText = text;
-    chatBox.appendChild(msgDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
+        input.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
+        document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => sendMessage(c.textContent)));
     </script>
+    <script src="script.js" defer></script>
 </body>
 </html>

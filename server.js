@@ -6,6 +6,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static(__dirname)); // serve the site itself, so /chat is same-origin
 
 // Load the API Key from your .env file (DO NOT hardcode it here)
 const openai = new OpenAI({
@@ -13,6 +14,8 @@ const openai = new OpenAI({
 });
 
 app.post('/chat', async (req, res) => {
+    const message = typeof req.body.message === 'string' ? req.body.message.trim().slice(0, 1000) : '';
+    if (!message) return res.status(400).json({ reply: 'Please tell me what you are looking for.' });
     try {
         const response = await openai.chat.completions.create({
             model: "gpt-5-mini", // Use the 2026 stable flagship mini model
@@ -23,10 +26,9 @@ app.post('/chat', async (req, res) => {
                 },
                 { 
                     role: "user", 
-                    content: req.body.message 
+                    content: message 
                 }
             ],
-            temperature: 0.65, // Slightly lower for more consistent luxury tone
         });
 
         res.json({ reply: response.choices[0].message.content });
@@ -36,7 +38,7 @@ app.post('/chat', async (req, res) => {
         console.error(error.message);
 
         // Check if the model name is the issue
-        if (error.message.includes("model_not_found")) {
+        if ((error.message || "").includes("model_not_found")) {
             res.status(404).json({ reply: "My catalog is being updated to the latest 2026 collection. Please try again in a moment." });
         } else {
             res.status(500).json({ reply: "The House of Auré is currently hosting a private viewing. Please try again shortly." });
